@@ -149,3 +149,27 @@
     - 일정시간이 경과할 때마다 특정 함수를 계속 호출하게 할 수 있다
 - eval
 - jasonparse 
+
+
+# 에이젝스 Asynchronous JavaScript and XML
+
+## 일반요청
+```javascript
+document.querySelector("#btn1").onclick = () => {
+    // 어떻게 클릭했는지 정보가 더 필요하면 파라미터로 받으면 된다
+    // 파라미터 저렇게 비워놔도 무조건 한개는 받는다 
+	// 웹브라우저가 지정한 URL로 요청을 수행한다.
+  window.location.href = "test1.jsp";
+};
+```
+## AJAX - XMLHttpRequest()
+```javascript
+var ta = document.querySelector("#ta");
+
+document.querySelector("#btn1").onclick = () => {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "test1.jsp", false);
+    xhr.send();
+    ta.value = xhr.responseText;
+};
+```
