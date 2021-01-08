@@ -173,3 +173,32 @@ document.querySelector("#btn1").onclick = () => {
     ta.value = xhr.responseText;
 };
 ```
+- 이거만 기억
+<%@ page language="java" contentType="text/html; charset=UTF-8"  
+    pageEncoding="UTF-8"%>  
+<% response.setHeader("Access-Control-Allow-Origin", "*");%>  
+
+## exam2 : GET, POST
+- contentType
+## exam3 : 무조건 비동기로 해라
+readystate==4  
++ status==200 (else {alert("실행 오류 입니다!"); r.value = "";})  
++ 입력폼초기화(dispatchEvent(e))  
+
+## exam4
+- 서버에서 일부 html을 가져올때 에이젝스를 쓰면된다(새로운거 없음 걍 연습임)
+    - 딱한번만 호출할 함수는 익명함수로 정의 즉시 호출하자
+- 서버에서 json 데이터 받아오기
+    - json에서 프로퍼티 문자열 ''안됨, ""만. 숫자는 안붙여도됨.
+## exam05 : AJAX 라이브러리 만들기 - MyQuery
+- $.ajax()
+제이쿼리 왜씁니까  
+코드가 간결해지고  
+크로스 브라우저를 자동으로 처리  
+
+1. ajax()를 만든다 url, function(result), function 을 넘겨준다
+2. 마이쿼리 객체를 만들고(에이젝스 함수가 다른 사람이 만든거랑 중복되지않게 하기위해 만든다 마이쿼리에 에이젝스라는 함수를 등록한다)   
+(성공했을때 실행할 함수(result : 서버로부터 받은 데이터), 실패했을때 실행할 함수)  
+3. var $ = myQuery;  
+
+
