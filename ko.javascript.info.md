@@ -255,12 +255,113 @@ undefined + 1 = NaN // (6)
 " \t \n" - 2 = -2 // (7)
 ```
 
+# 2.9 비교연산자
 
+## 문자열끼리 비교
+- 사전순(정확히는 유니코드 순)으로 비교한다, 그래서 a가 A보다 크다
+```javascript
+alert( 'Z' > 'A' ); // true
+alert( 'Glow' > 'Glee' ); // true
+alert( 'Bee' > 'Be' ); // true
+```
 
+## 다른 형을 가진 값 간의 비교
+- 숫자형!으로 바꿔서 비교한다
+```javascript
+alert( '2' > 1 ); // true
+alert( '01' == 1 ); // true
+alert( true == 1 ); // true
+alert( false == 0 ); // true
 
+let a = 0;
+alert( Boolean(a) ); // false
+let b = "0";
+alert( Boolean(b) ); // true
+alert(a == b); // true!
+```
 
+## == 와 ===(!= 와 !==)
+```javascript
+alert( 0 == false ); // true
+alert( '' == false ); // true
 
+alert( 0 === false ); // false : 자료형 검사까지하기 때문이다
+```
 
+## null이나 undefined와 비교하기
+```javascript
+alert( null === undefined ); // false : 당연히 자료형이 서로 다르니까
+alert( null == undefined ); // true : null -> 0, undefined -> NaN이지만 동등! 연산자는 null과 undefined를 '각별한 커플’처럼 취급한다고 한다.
+```
 
+```javascript
+alert( null > 0 );  // (1) false
+alert( null == 0 ); // (2) false
+alert( null >= 0 ); // (3) true  
+// 3은 당연한거고
+// 2는 동등연산자가 좀 특이하기 때문이다
+// 동등 연산자 ==는 피연산자가 undefined나 null일 때 형 변환을 하지 않는다.
+// undefined와 null을 비교하는 경우에만 true를 반환하고, 그 이외의 경우
+// (null이나 undefined를 다른 값과 비교할 때)는 무조건 false를 반환
+```
 
+```javascript
+// undefined를 다른 값과 비교해서는 안된다.
+// undefined -> NaN이기때문에 아래결과들이 당연한것.
+alert( undefined > 0 ); // false (1)
+alert( undefined < 0 ); // false (2)
+alert( undefined == 0 ); // false (3)
+```
+
+### 그래서 함정을 피해야한다
+- 일치 연산자 ===를 제외한 비교 연산자의 피연산자에 undefined나 null이 오지 않도록 특별히 주의하자
+- 또한, undefined나 null이 될 가능성이 있는 변수가 >= > < <=의 피연산자가 되지 않도록 주의하자.  
+명확한 의도를 갖고 있지 않은 이상 말이다.  
+만약 변수가 undefined나 null이 될 가능성이 있다고 판단되면, 이를 따로 처리하는 코드를 추가하자  
+
+## 퀴즈
+```javascript
+5 > 4
+"apple" > "pineapple"
+"2" > "12"
+undefined == null
+undefined === null
+null == "\n0\n"
+null === +"\n0\n"
+```
+
+## 답
+```javascript
+5 > 4 → true
+"apple" > "pineapple" → false
+"2" > "12" → true // 문자열이니까 사전순(2가 1보다 뒤에 오니까)
+undefined == null → true
+undefined === null → false
+null == "\n0\n" → false // null은 오직 undefined와 같다
+null === +"\n0\n" → false
+```
+
+# 2.10 if와 '?'를 사용한 조건 처리
+- 다중 '?'
+```javascript
+let age = prompt('나이를 입력해주세요.', 18);
+
+let message = (age < 3) ? '아기야 안녕?' :
+  (age < 18) ? '안녕!' :
+  (age < 100) ? '환영합니다!' :
+  '나이가 아주 많으시거나, 나이가 아닌 값을 입력 하셨군요!';
+
+alert( message );
+
+// 위와 아래는 같다 가독성을 위해 아래 방식을 쓰자
+if (age < 3) {
+  message = '아기야 안녕?';
+} else if (age < 18) {
+  message = '안녕!';
+} else if (age < 100) {
+  message = '환영합니다!';
+} else {
+  message = '나이가 아주 많으시거나, 나이가 아닌 값을 입력 하셨군요!';
+}
+```
 
