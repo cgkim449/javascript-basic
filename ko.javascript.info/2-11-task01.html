@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <script >
+    "use strict";
+    let answer = prompt("who's there?", "");
+    if(answer=='Admin') {
+      let answer = prompt("password?", "");
+      if (answer=='TheMaster') {
+        alert("Welcome!");
+      } else if (answer == "" || answer == null) {
+        alert("Canceled");
+      } else {
+        alert("Wrong password");
+      }
+    } else if(answer==null) {
+      alert("Canceled")
+    } else {
+      alert("I don't know you");
+    }
+  </script>
+</body>
+</html>

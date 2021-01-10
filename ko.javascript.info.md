@@ -365,3 +365,137 @@ if (age < 3) {
 }
 ```
 
+# 2.11 논리 연산자
+- ||, &&, ! 이 세개가 있다
+- '논리' 연산자지만 피연산자로 불린형만이 아니라 모든 타입을 받을 수 있다, 그리고 연산 결과 역시 모든 타입이 될 수 있다
+
+## ||의 추가기능
+- ||의 연산 순서
+    - 가장 왼쪽 피연산자부터 시작해 오른쪽으로 나아가며 피연산자를 평가
+    - 각 피연산자를 불린형으로 변환한다. 변환 후 그 값이 [true이면] 연산을 멈추고 해당 피연산자의 변환 전 원래 값을 반환함.
+    - 피연산자 모두를 평가한 경우(모든 피연산자가 [false로평가되는경우])엔 마지막 피연산자를 반환
+    - 정리 :  AND 연산자는 첫 번째 [truthy]를 반환한다. 피연산자에 [truthy]가 없다면 마지막 피연산자을 반환한다.
+1. 변수 또는 표현식으로 구성된 목록에서 첫 번째 truthy 얻기
+ ```javascript
+alert( 1 || 0 ); // 1 (1은 truthy임)
+alert( null || 1 ); // 1 (1은 truthy임)
+alert( null || 0 || 1 ); // 1 (1은 truthy임)
+alert( undefined || null || 0 ); // 0 (모두 falsy이므로, 마지막 값을 반환함)
+
+let firstName = "";
+let lastName = "";
+let nickName = "바이올렛";
+alert( firstName || lastName || nickName || "익명"); // 바이올렛
+```
+
+2. 단락 평가(short circuit evaluation)
+- 위에서 설영했듯이 OR||은 왼쪽부터 시작해서 오른쪽으로 평가를 진행하는데, truthy를 만나면 나머지 값들은 건드리지 않은 채 평가를 멈춘다. 이를 단락평가라고 한다.
+```javascript
+true || alert("not printed");
+false || alert("printed");
+```
+
+## &&
+- &&의 연산순서(||와 비교해서 보라)
+    - ~ 
+    - ~ [false이면] ~
+    - ~ [true로평가되는경우] ~
+    - 정리 :  ~ [falsy] ~. ~ [falsy] ~.
+- 주의 : &&가 ||보다 우선순위 높음
+
+## !
+- !! 하면 값을 불린형으로 바꿀수있다
+```javascript
+alert( !!"non-empty string" ); // true
+alert( !!null ); // false
+// 이때, 첫 번째 NOT 연산자는 피연산자로 받은 값을 불린형으로 변환한 후 이 값의 역을 반환하고, 두 번째 NOT 연산자는 첫 번째 NOT 연산자가 반환한 값의 역을 반환한다. 
+// 내장함수 Boolean()을 쓴거랑 같다.
+```
+- !은 모든 논리연산자중에 우선순위 가장 높음
+
+## 예제
+```javascript
+alert( null || 2 || undefined );
+```
+
+```javascript
+alert( alert(1) || 2 || alert(3) );
+```
+
+```javascript
+alert( 1 && null && 2 );
+```
+
+```javascript
+alert( alert(1) && alert(2) );
+```
+
+```javascript
+alert( null || 2 && 3 || 4 );
+```
+
+# 2.12 null 병합 연산자 '??'
+- 스펙에 추가된 지 얼마 안 된 문법. 구식 브라우저는 폴리필??이 필요.
+
+- null 병합 연산자(nullish coalescing operator) ??를 사용하면 짧은 문법으로 여러 피연산자 중 그 값이 ‘확정되어있는’ 변수를 찾을 수 있다.
+
+- x = a ?? b의 평가 결과
+    - a가 null이나 undefined가 아니면 a, 그 외의 경우는 b
+    - x = (a !== null && a !== undefined) ? a : b; 와 같다.
+
+```javascript
+// null 병합 연산자 ??를 사용하면 값이 정해진 변수를 간편하게 찾아낼 수 있습니다.
+let firstName = null;
+let lastName = null;
+let nickName = "Supercoder";
+
+// null이나 undefined가 아닌 첫 번째 피연산자
+alert(firstName ?? lastName ?? nickName ?? "Anonymous"); // Supercoder
+```
+
+## '??'와 '||'의 차이
+- ||는 첫 번째 truthy 값을 반환한다
+- ??는 첫 번째 정의된(defined) 값을 반환합니다.
+> null과 undefined, 숫자 0을 구분 지어 다뤄야 할 때 이 차이점은 매우 중요한 역할을 함.
+
+```javascript
+let height = 0;
+
+alert(height || 100); // 100
+alert(height ?? 100); // 0
+// 즉, 높이처럼 0이 할당될 수 있는 변수를 사용해 기능을 개발할 땐 ||보다 ??가 적합하다
+```
+
+## 연산자 우선순위
+- ??의 연산자 우선순위는 5로 꽤 낮다
+    - ??는 =와 ? 보다는 먼저, 대부분의 연산자보다는 나중에 평가됨.
+    - 그래서 복잡한 표현식 안에서 ??를 사용해 값을 하나 선택할 땐 괄호를 추가하는 게 좋다.
+    ```javascript
+    let height = null;
+    let width = null;
+
+    // 괄호를 추가!
+    let area = (height ?? 100) * (width ?? 50);
+
+    alert(area); // 5000
+    ```
+- 안정성 관련 이슈 때문에 ??는 &&나 ||와 함께 사용하지 못한다!
+    - 제약을 피하려면 괄호를 사용하라
+    ```javascript
+    let x = (1 && 2) ?? 3; // 제대로 동작한다
+    alert(x); // 2
+    ```
+## 요약
+- ??를 사용하면 피연산자 중 ‘값이 할당된’ 변수를 빠르게! 찾을 수 있다.
+    - ??는 변수에 기본값을 할당하는 용도로 사용할 수 있다. 
+    ```javascript
+    // height가 null이나 undefined인 경우, 100을 할당
+    height = height ?? 100;
+    ```
+
+
+
+
+
+
+
