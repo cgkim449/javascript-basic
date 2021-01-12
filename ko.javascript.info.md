@@ -493,7 +493,29 @@ alert(height ?? 100); // 0
     height = height ?? 100;
     ```
 
+# 2.13 while, for
+```javascript
+let i = 3;
+while (i) { // i가 0이 되면 조건이 falsy가 되므로 반복문이 멈춤
+  alert( i );
+  i--;
+}
+```
 
+```javascript
+let sum = 0;
+
+while (true) {
+
+  let value = +prompt("숫자를 입력하세요.", '');
+
+  if (!value) break; // (*)
+
+  sum += value;
+
+}
+alert( '합계: ' + sum );
+```
 
 
 
