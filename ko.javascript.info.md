@@ -517,6 +517,62 @@ while (true) {
 alert( '합계: ' + sum );
 ```
 
+# 2.14 switch문
+```javascript
+let a = "1";
+let b = 0;
+
+switch (+a) {
+  case b + 1:
+    alert("표현식 +a는 1, 표현식 b+1는 1이므로 이 코드가 실행됩니다.");
+    break;
+
+  default:
+    alert("이 코드는 실행되지 않습니다.");
+}
+```
+
+```javascript
+let a = 3;
+
+switch (a) {
+  case 4:
+    alert('계산이 맞습니다!');
+    break;
+
+  case 3: // (*) 두 case문을 묶음
+  case 5:
+    alert('계산이 틀립니다!');
+    alert("수학 수업을 다시 들어보는걸 권유 드립니다.");
+    break;
+
+  default:
+    alert('계산 결과가 이상하네요.');
+}
+```
+
+## 자료형에 주의하라 - prompt는 문자열을 리턴함
+```javascript
+let arg = prompt("값을 입력해주세요.");
+switch (arg) {
+  case '0':
+  case '1':
+    alert( '0이나 1을 입력하셨습니다.' );
+    break;
+
+  case '2':
+    alert( '2를 입력하셨습니다.' );
+    break;
+
+  case 3:
+    alert( '이 코드는 절대 실행되지 않습니다!' );
+    break;
+  default: // 얘가 실행된다
+    alert( '알 수 없는 값을 입력하셨습니다.' );
+}
+```
+- ==는 피연산자를 숫자로 자동변환해준ㄴ다?
+- +는 숫자로 변환해준다
 
 
 
