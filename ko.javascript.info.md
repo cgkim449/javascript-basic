@@ -574,6 +574,96 @@ switch (arg) {
 - ==는 피연산자를 숫자로 자동변환해준ㄴ다?
 - +는 숫자로 변환해준다
 
+# 2.15 함수
+
+## 함수 선언
+```javascript
+function name(parameters) {
+  alert('안녕하세요!');
+}
+```
+
+## 매개변수의 기본값
+- 매개변수에 값을 전달하지 않으면 그 값은 undefined가 된다.
+- 이때, undefined가 되지 않게하려면 기본값을 설정해주면 된다.
+  ```javascript
+  function showMessage(from, text = "no text given") {
+    alert( from + ": " + text);
+  }
+  ```
+- 아래와 같이 복잡한 표현식도 기본값으로 설정할 수 있다.
+  ```javascript
+  function showMessage(from, text = anotherFunction()) {
+    // 이때, anotherFunction()은 text값이 없을 때만 호출된다.
+    // anotherFunction()의 반환값이 text의 값이 된다.
+  }
+  ```
+- 물론 몸체 안에서 기본값을 설정할 수 도 있다.
+  ```javascript
+  function showMessage(text) {
+  if (text === undefined) {
+    text = '빈 문자열';
+  }
+
+  alert(text);
+  }
+  ```
+  ```javascript
+  showMessage(); // 빈 문자열
+
+  // 매개변수가 생략되었거나 빈 문자열("")이 넘어오면 변수에 '빈 문자열'이 할당됩니다.
+  function showMessage(text) {
+  text = text || '빈 문자열';
+  ...
+  }
+  ```
+  ```javascript
+  // 매개변수가 생략되었거나 빈 문자열("")이 넘어오면 변수에 '빈 문자열'이 할당됩니다.
+  function showMessage(text) {
+  text = text || '빈 문자열';
+  ...
+  }
+  ```
+
+## 반환
+- return문이 없는 함수도 무언가를 반환하는데, undefined가 그것이다.
+- return 지시자만 있는 함수도 undefined를 반환한다.
+
+### 주의 : return과 값 사이에 절대 줄을 삽입하면 안됨
+- 자바스크립트는 return문 끝에 세미콜론을 자동으로 넣기 때문
+```javascript 
+  // 얘처럼 하자
+  return (
+    some + long + expression
+    + or +
+    whatever * f(a) + f(b)
+    )
+```
+
+## 함수는 동작 하나만 담당해야 합니다.
+- getAge 함수는 나이를 얻어오는 동작만 수행해야 한다 alert 창에 나이를 출력해주는 동작은 이 함수에 들어가지 않는 것이 좋다.
 
 
+# 2.16 함수 표현식
+- 자바스크립트는 함수를 특별한 종류의 값으로 취급한다. 다른 언어에서처럼 "특별한 동작을 하는 구조"로 취급하지 않는다.
+- 함수는 함수 선언 방식 외에도 함수 표현식을 사용해 만들 수 있다.
+  ```javascript
+    let sayHi = function() {
+      alert("Hello");
+    }
+  ```
+- 함수는 값이기 때문에 alert를 이용하여 함수 코드를 출력할 수도 있다.
+ ```javascript
+ function sayHi() {
+  alert( "Hello" );
+  }
+
+  alert( sayHi ); // 함수 코드가 보임
+
+ ```
+## 콜백 : 함수의 인수로 전달되어 나중에 호출(called back)되는 함수를 콜백이라 한다.
+
+## 선언문 vs 표현식
+- 호이스팅
+- 스코프 : 함수 선언문은 블록 스코프이다. 
 
