@@ -667,3 +667,42 @@ function name(parameters) {
 - 호이스팅
 - 스코프 : 함수 선언문은 블록 스코프이다. 
 
+# 2.17 화살표 함수 기본
+
+- 함수 표현식보다 더 단순한 문법
+```javascript
+  let func = (arg1, arg2, ...argN) => expression
+  // 파라미터 arg1..argN을 받는 함수 func
+  // func는 => 우측의 표현식을 평가하고 평가 결과를 반환한다
+  // 아래 함수의 축약 버전임
+```
+```javascript
+  let func = function(arg1, arg2, ...argN) {
+    return expression;
+  };
+```
+- 파라미터가 한개면 괄호 생략 가능
+```javascript
+  let double = n => n*2;
+```
+- 파라미터가 없을땐 괄호를 비워둔다
+```javascript
+  let sayHi = () => alert("안녕하세요!");
+```
+- 화살표 함수는 함수 표현식과 같은 방법으로 사용할수 있다(아래 예시처럼 함수를 동적으로 만들 수 있다.)
+```javascript
+  let age = prompt("나이를 알려주세요.", 18);
+  let welcome = (age < 18) ?
+    () => alert('안녕') :
+    () => alert("안녕하세요!");
+  welcome();
+```
+## 본문이 여러줄인 화살표 함수
+```javascript
+  let sum = (a, b) => {
+    let result = a + b;
+    return result;
+  };
+
+  alert( sum(1,2) ); // 3
+```
